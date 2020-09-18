@@ -51,9 +51,9 @@ class User {
   };
 }
 
-const myFunc = async () => {
-  let user = await User.findByUsername('test');
-  console.log(user);
-};
-myFunc();
+// const myFunc = async () => {
+//   let user = await User.findByUsername('test');
+//   console.log(user);
+// };
+// myFunc();
 module.exports = User;

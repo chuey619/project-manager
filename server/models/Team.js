@@ -6,7 +6,7 @@ class Team {
     this.name = team.name;
     this.team_lead = team.team_lead;
   }
-  static getById = async (id) => {
+  static findById = async (id) => {
     try {
       const team = await db.oneOrNone(
         ` SELECT * FROM teams WHERE id = $1 `,
@@ -36,7 +36,7 @@ class Team {
             WHERE teams_members.team_id = $1`,
         this.id
       );
-      members.map((member) => new User(member));
+      return members.map((member) => new User(member));
     } catch (error) {
       throw new Error('no team members found');
     }
@@ -65,8 +65,7 @@ class Team {
         VALUES
         ($1, $2)
         RETURNING *`,
-        member_id,
-        this.id
+        [member_id, this.id]
       );
     } catch {
       throw new Error('couldnt add team member');
@@ -77,13 +76,17 @@ class Team {
       return db.one(
         `DELETE FROM teams_members WHERE team_id = $1 AND member_id = $2
         RETURNING *`,
-        this.id,
-        member_id
+        [this.id, member_id]
       );
     } catch {
       throw new Error('could not remove team member');
     }
   };
 }
-
+const myFunc = async () => {
+  const team = await Team.findById(1);
+  const members = await team.getTeamMembers();
+  console.log(members);
+};
+myFunc();
 module.exports = Team;
