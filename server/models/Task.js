@@ -29,5 +29,15 @@ class Task {
       throw new Error('could not save task');
     }
   };
+  markComplete = async () => {
+    try {
+      return db.one(
+        'UPDATE tasks SET is_completed = true WHERE id = $1',
+        this.id
+      );
+    } catch {
+      throw new Error('could not mark as complete');
+    }
+  };
 }
 module.exports = Task;
