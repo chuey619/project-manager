@@ -39,5 +39,12 @@ class Task {
       throw new Error('could not mark as complete');
     }
   };
+  delete = async () => {
+    try {
+      return db.one(`DELETE FROM tasks WHERE id = $1`, this.id);
+    } catch {
+      throw new Error('could not delete task');
+    }
+  };
 }
 module.exports = Task;

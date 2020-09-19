@@ -4,7 +4,7 @@ CREATE TABLE users
     username VARCHAR(255),
     name VARCHAR(255),
     password_digest VARCHAR(255),
-    UNIQUE (username)
+    UNIQUE (username, name)
 )
 
 

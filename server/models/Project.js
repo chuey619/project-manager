@@ -16,6 +16,17 @@ class Project {
       throw new Error('could not find project');
     }
   };
+  static getAllForTeam = async (team_id) => {
+    try {
+      const projects = await db.manyOrNone(
+        `SELECT * FROM projects WHERE team_id = $1`,
+        team_id
+      );
+      projects.map((project) => new this(project));
+    } catch {
+      throw new Error('could not find projects');
+    }
+  };
   setTasks = async () => {
     const tasks = db.manyOrNone(
       `SELECT * FROM tasks WHERE project_id = $1`,

@@ -1,5 +1,6 @@
 const db = require('../db/config');
 const User = require('./User');
+
 class Team {
   constructor(team) {
     this.id = team.id || null;
@@ -83,10 +84,10 @@ class Team {
     }
   };
 }
-const myFunc = async () => {
-  const team = await Team.findById(1);
-  const members = await team.getTeamMembers();
-  console.log(members);
-};
-myFunc();
+// const myFunc = async () => {
+//   const team = await Team.findById(1);
+//   const members = await team.getTeamMembers();
+//   console.log(members);
+// };
+// myFunc();
 module.exports = Team;
