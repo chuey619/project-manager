@@ -7,9 +7,9 @@ class Task {
     this.description = task.description;
     this.completed_by = task.completed_by;
   }
-  static getById = async (id) => {
+  static findById = async (id) => {
     try {
-      const task = db.oneOrNone(`SELECT * FROM tasks WHERE id = $1`, id);
+      const task = await db.oneOrNone(`SELECT * FROM tasks WHERE id = $1`, id);
       return new this(task);
     } catch {
       throw new Error('could not find task');
@@ -17,14 +17,15 @@ class Task {
   };
   save = async () => {
     try {
-      let task = db.one(
+      let task = await db.one(
         `INSERT INTO tasks 
             (title, project_id, description)
             VALUES
-            ($/title/, $/project_id/, $/description/)`,
+            ($/title/, $/project_id/, $/description/)
+            RETURNING *`,
         this
       );
-      return new this(task);
+      return Object.assign(this, task);
     } catch {
       throw new Error('could not save task');
     }
@@ -41,7 +42,7 @@ class Task {
   };
   delete = async () => {
     try {
-      return db.one(`DELETE FROM tasks WHERE id = $1`, this.id);
+      await db.one(`DELETE FROM tasks WHERE id = $1 RETURNING *`, this.id);
     } catch {
       throw new Error('could not delete task');
     }

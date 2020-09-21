@@ -10,7 +10,11 @@ class Project {
   }
   static findById = async (id) => {
     try {
-      const project = db.oneOrNone(`SELECT * FROM projects WHERE id = $1`, id);
+      const project = await db.oneOrNone(
+        `SELECT * FROM projects WHERE id = $1`,
+        id
+      );
+
       return new this(project);
     } catch {
       throw new Error('could not find project');
@@ -22,19 +26,51 @@ class Project {
         `SELECT * FROM projects WHERE team_id = $1`,
         team_id
       );
-      projects.map((project) => new this(project));
+      return projects.map((project) => new this(project));
     } catch {
       throw new Error('could not find projects');
     }
   };
   setTasks = async () => {
-    const tasks = db.manyOrNone(
-      `SELECT * FROM tasks WHERE project_id = $1`,
+    try {
+      const tasks = await db.manyOrNone(
+        `SELECT * FROM tasks WHERE project_id = $1`,
+        this.id
+      );
+      tasks.forEach((task) => {
+        this.tasks.push(new Task(task));
+      });
+      return this;
+    } catch {
+      throw new Error('could not set tasks');
+    }
+  };
+  delete = async () => {
+    // try {
+    await db.manyOrNone(
+      `DELETE FROM tasks WHERE project_id = $1 RETURNING *`,
       this.id
     );
-    (await tasks).map((task) => {
-      this.tasks.push(new Task(task));
-    });
+    await db.one(`DELETE FROM projects WHERE id = $1 RETURNING *`, this.id);
+    // } catch (error) {
+    //   throw new Error('could not delete project');
+    // }
+  };
+  save = async () => {
+    try {
+      const project = db.one(
+        `
+                  INSERT INTO projects
+                  (name, team_id)
+                  VALUES ($/name/, $/team_id/)
+                  RETURNING *
+                  `,
+        this
+      );
+      return Object.assign(this, project);
+    } catch {
+      throw new Error('couldnt save for some reason');
+    }
   };
 }
 

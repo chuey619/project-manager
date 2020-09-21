@@ -3,7 +3,10 @@ const authRouter = express.Router();
 const passport = require('../services/local');
 const User = require('../models/User');
 const usersController = require('../controllers/usersController');
+
+//register user
 authRouter.post('/register', usersController.create);
+//login user
 authRouter.post('/login', async (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
@@ -38,6 +41,8 @@ authRouter.post('/login', async (req, res, next) => {
     });
   })(req, res, next);
 });
+
+//user context stuff
 authRouter.get('/me', async (req, res) => {
   if (req.user)
     return res.status(200).json({
@@ -58,6 +63,8 @@ authRouter.get('/me', async (req, res) => {
       },
     });
 });
+
+//logout
 authRouter.get('/logout', (req, res) => {
   req.logout();
   res.json({
@@ -68,4 +75,5 @@ authRouter.get('/logout', (req, res) => {
     },
   });
 });
+
 module.exports = authRouter;

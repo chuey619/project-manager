@@ -18,6 +18,20 @@ class Team {
       throw new Error('team not found');
     }
   };
+  static getTeamsForUser = async (user_id) => {
+    try {
+      const teams = await db.manyOrNone(
+        `
+      SELECT teams.* FROM teams_members JOIN teams ON teams_members.team_id = teams.id
+      WHERE teams_members.member_id = $1
+      `,
+        user_id
+      );
+      return teams.map((team) => new this(team));
+    } catch {
+      throw new Error('could not find teams');
+    }
+  };
   getTeamLead = async () => {
     try {
       const teamLead = await db.oneOrNone(
@@ -44,7 +58,7 @@ class Team {
   };
   save = async () => {
     try {
-      const team = db.one(
+      const team = await db.one(
         `
                 INSERT INTO teams
                 (name, team_lead)
@@ -83,11 +97,24 @@ class Team {
       throw new Error('could not remove team member');
     }
   };
+  delete = async () => {
+    try {
+      await db.manyOrNone(
+        `
+      DELETE FROM teams_members WHERE team_id = $1
+      RETURNING *
+      `,
+        this.id
+      );
+      await db.manyOrNone(
+        `DELETE FROM projects WHERE team_id = $1 RETURNING *`,
+        this.id
+      );
+      return db.one(`DELETE FROM teams WHERE id = $1 RETURNING *`, this.id);
+    } catch {
+      throw new Error('Could not delete team');
+    }
+  };
 }
-// const myFunc = async () => {
-//   const team = await Team.findById(1);
-//   const members = await team.getTeamMembers();
-//   console.log(members);
-// };
-// myFunc();
+
 module.exports = Team;

@@ -45,6 +45,8 @@ const teamRoutes = require('./routes/teamRoutes');
 server.use('/teams', teamRoutes);
 const authRoutes = require('./routes/authRouter');
 server.use('/auth', authRoutes);
+const projectRoutes = require('./routes/projectRoutes');
+server.use('/projects', projectRoutes);
 server.use('*', (req, res) => {
   res.status(404).json({
     message: 'not found',
