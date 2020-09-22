@@ -41,7 +41,7 @@ class User {
   };
 
   save = async () => {
-    const user = db.one(
+    const user = await db.one(
       `
           INSERT INTO users
           (username, name, password_digest)

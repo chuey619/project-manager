@@ -24,6 +24,7 @@ projectController.create = async (req, res, next) => {
     const project = new Project({
       name: req.body.name,
       team_id: parseInt(req.params.team_id),
+      description: req.body.description,
     });
     const projectToSend = await project.save();
     res.json({

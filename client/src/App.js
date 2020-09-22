@@ -4,7 +4,7 @@ import { ThemeProvider, CSSReset } from '@chakra-ui/core';
 import { UserProvider, UserContext } from './contexts/userContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import customTheme from './theme';
-import { FullWidth } from './layouts';
+import { FullWidth, SideBar } from './layouts';
 import { Home, Landing } from './pages';
 function App() {
   const reducer = (state, action) => {
@@ -30,24 +30,30 @@ function App() {
       <ThemeProvider theme={customTheme}>
         <CSSReset />
         <Router>
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <FullWidth>
-                <Landing />
-              </FullWidth>
+          <UserContext.Consumer>
+            {(value) => (
+              <>
+                <Route
+                  exact
+                  path="/"
+                  render={() => (
+                    <FullWidth>
+                      <Landing />
+                    </FullWidth>
+                  )}
+                />
+                <Route
+                  exact
+                  path="/home"
+                  render={() => (
+                    <FullWidth>
+                      <Home user={value} />
+                    </FullWidth>
+                  )}
+                />
+              </>
             )}
-          />
-          <Route
-            exact
-            path="/home"
-            render={() => (
-              <FullWidth>
-                <Home />
-              </FullWidth>
-            )}
-          />
+          </UserContext.Consumer>
         </Router>
       </ThemeProvider>
     </UserProvider>

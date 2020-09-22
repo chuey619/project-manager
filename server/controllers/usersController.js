@@ -6,13 +6,13 @@ const usersController = {};
 usersController.create = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync();
-    const hash = bcrypt.hashSync(req.body.password, salt);
+    const hash = bcrypt.hashSync(req.body.user.password, salt);
     let user = new User({
-      username: req.body.username,
-      name: req.body.name,
+      username: req.body.user.username,
+      name: req.body.user.name,
       password_digest: hash,
     });
-    await user.save();
+    user = await user.save();
     req.login(user, (err) => {
       if (err) return next(err);
       res.status(201).json({

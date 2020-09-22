@@ -11,7 +11,7 @@ export const UserProvider = ({ reducer, children }) => {
   const [state, dispatch] = useReducer(reducer, initialValue);
 
   useEffect(() => {
-    fetch(`/api/auth/me`, {
+    fetch(`/auth/me`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ export const UserProvider = ({ reducer, children }) => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log('Ran Me Query');
+        console.log('Ran Query');
         if (!isEmpty(res?.data?.user)) {
           dispatch({
             type: 'login',

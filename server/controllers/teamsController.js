@@ -6,7 +6,7 @@ const teamsController = {};
 
 teamsController.index = async (req, res, next) => {
   try {
-    const teams = await Team.getTeamsForUser(7);
+    const teams = await Team.getTeamsForUser(req.user.id);
     res.json({
       message: 'ok',
       data: {

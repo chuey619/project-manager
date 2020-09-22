@@ -6,6 +6,7 @@ class Project {
     this.team_id = project.team_id;
     this.is_completed = project.is_completed;
     this.name = project.name;
+    this.description = project.description;
     this.tasks = [];
   }
   static findById = async (id) => {

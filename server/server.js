@@ -35,12 +35,13 @@ server.use((req, res, next) => {
   next();
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 4001;
 server.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
 
 //ROUTES
+server.use(express.static(path.join(__dirname, 'build')));
 const teamRoutes = require('./routes/teamRoutes');
 server.use('/teams', teamRoutes);
 const authRoutes = require('./routes/authRouter');
@@ -51,6 +52,9 @@ server.use('*', (req, res) => {
   res.status(404).json({
     message: 'not found',
   });
+});
+server.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 server.use((err, req, res, next) => {

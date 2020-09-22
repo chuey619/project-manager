@@ -28,13 +28,13 @@ const Navbar = (props) => {
 
   const handleLogout = (evt) => {
     evt.preventDefault();
-    fetch(`/api/auth/logout`, {
+    fetch(`/auth/logout`, {
       method: 'GET',
     }).then((res) => {
       dispatch({
         type: 'logout',
       });
-      history.push('/login');
+      history.push('/');
     });
   };
 
@@ -50,6 +50,8 @@ const Navbar = (props) => {
       color="blue.300"
       gridArea="nav"
       {...props}
+      borderBottom="1px solid #63B3ED"
+      mb="3%"
     >
       <Link to="/">
         <Flex align="center" mr={5}>
