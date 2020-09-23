@@ -7,11 +7,31 @@ projectController.show = async (req, res, next) => {
   try {
     const project = await Project.findById(req.params.project_id);
     await project.setTasks();
+    let lanes = {};
+    project.tasks.forEach((task) => (lanes[task.category] = 1));
+    let lanesToSend = Object.keys(lanes).map((lane, i) => {
+      return {
+        id: lane,
+        title: lane,
+        cards: project.tasks
+          .map((task) => {
+            if (task.category === lane) {
+              return {
+                id: task.id,
+                description: task.description,
+                title: task.title,
+                draggable: true,
+              };
+            } else {
+              return null;
+            }
+          })
+          .filter((el) => el !== null),
+      };
+    });
+
     res.json({
-      message: 'project found',
-      data: {
-        project: project,
-      },
+      data: { lanes: lanesToSend },
     });
   } catch (error) {
     next(error);
@@ -20,7 +40,6 @@ projectController.show = async (req, res, next) => {
 
 projectController.create = async (req, res, next) => {
   try {
-    console.log(req.params);
     const project = new Project({
       name: req.body.name,
       team_id: parseInt(req.params.team_id),
@@ -53,10 +72,12 @@ projectController.delete = async (req, res, next) => {
 
 projectController.addTask = async (req, res, next) => {
   try {
+    console.log(req.body);
     const task = new Task({
       title: req.body.title,
       description: req.body.description,
       project_id: parseInt(req.params.project_id),
+      category: req.body.category,
     });
     await task.save();
     res.json({
@@ -77,6 +98,19 @@ projectController.removeTask = async (req, res, next) => {
     await task.delete();
     res.json({
       message: 'task deleted',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+projectController.updateTask = async (req, res, next) => {
+  try {
+    const task_id = parseInt(req.params.task_id);
+    const task = await Task.findById(task_id);
+    await task.updateCategory(req.body.category);
+    res.json({
+      message: 'category updated',
     });
   } catch (error) {
     next(error);

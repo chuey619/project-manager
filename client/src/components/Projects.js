@@ -9,7 +9,7 @@ import {
   Button,
   useDisclosure,
 } from '@chakra-ui/core';
-import { NewProject } from './index';
+import { NewProject, CustomLink as Link } from './index';
 const Projects = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -33,13 +33,16 @@ const Projects = (props) => {
                   justifyContent="space-between"
                 >
                   <Text>{project.description}</Text>
-                  <Button
-                    variant="outline"
-                    variantColor="#63B3ED"
+
+                  <Link
+                    to={{
+                      pathname: `/${props.team.name}/${project.name}`,
+                      state: project,
+                    }}
                     color="#63B3ED"
                   >
                     Go to project
-                  </Button>
+                  </Link>
                 </Box>
               </AccordionPanel>
             </AccordionItem>

@@ -8,3 +8,5 @@ export { default as Projects } from './Projects';
 export { default as HomeHeader } from './HomeHeader';
 export { default as NewTeam } from './NewTeam';
 export { default as NewProject } from './NewProject';
+export { default as ProjectBoard } from './ProjectBoard';
+export { default as Chat } from './Chat';

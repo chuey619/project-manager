@@ -7,6 +7,7 @@ projectRouter.delete(
   '/:project_id/tasks/:task_id',
   projectController.removeTask
 );
+projectRouter.put('/:project_id/tasks/:task_id', projectController.updateTask);
 projectRouter.post('/', projectController.create);
 projectRouter.delete('/:project_id', projectController.delete);
 module.exports = projectRouter;

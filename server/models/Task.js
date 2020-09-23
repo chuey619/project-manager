@@ -4,6 +4,7 @@ class Task {
     this.id = task.id || null;
     this.title = task.title;
     this.project_id = task.project_id;
+    this.category = task.category;
     this.description = task.description;
     this.completed_by = task.completed_by;
   }
@@ -19,9 +20,9 @@ class Task {
     try {
       let task = await db.one(
         `INSERT INTO tasks 
-            (title, project_id, description)
+            (title, project_id, description, category)
             VALUES
-            ($/title/, $/project_id/, $/description/)
+            ($/title/, $/project_id/, $/description/, $/category/)
             RETURNING *`,
         this
       );
@@ -30,14 +31,35 @@ class Task {
       throw new Error('could not save task');
     }
   };
-  markComplete = async () => {
+
+  updateCategory = async (category) => {
     try {
       return db.one(
-        'UPDATE tasks SET is_completed = true WHERE id = $1',
-        this.id
+        'UPDATE tasks SET category = $1 WHERE id = $2 RETURNING *',
+        [category, this.id]
       );
     } catch {
-      throw new Error('could not mark as complete');
+      throw new Error('could not update category');
+    }
+  };
+  updateTitle = async (title) => {
+    try {
+      return db.one('UPDATE tasks SET title = $1 WHERE id = $2', [
+        title,
+        this.id,
+      ]);
+    } catch {
+      throw new Error('could not update category');
+    }
+  };
+  updateDescription = async (description) => {
+    try {
+      return db.one('UPDATE tasks SET description = $1 WHERE id = $2', [
+        description,
+        this.id,
+      ]);
+    } catch {
+      throw new Error('could not update category');
     }
   };
   delete = async () => {

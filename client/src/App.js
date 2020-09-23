@@ -2,10 +2,10 @@ import React from 'react';
 
 import { ThemeProvider, CSSReset } from '@chakra-ui/core';
 import { UserProvider, UserContext } from './contexts/userContext';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import customTheme from './theme';
-import { FullWidth, SideBar } from './layouts';
-import { Home, Landing } from './pages';
+import { FullWidth } from './layouts';
+import { Home, Landing, ProjectPage } from './pages';
 function App() {
   const reducer = (state, action) => {
     switch (action.type) {
@@ -32,7 +32,7 @@ function App() {
         <Router>
           <UserContext.Consumer>
             {(value) => (
-              <>
+              <Switch>
                 <Route
                   exact
                   path="/"
@@ -51,7 +51,15 @@ function App() {
                     </FullWidth>
                   )}
                 />
-              </>
+                <Route
+                  path="/:team_name/:project_name"
+                  render={(props) => (
+                    <FullWidth>
+                      <ProjectPage {...props} user={value} />
+                    </FullWidth>
+                  )}
+                />
+              </Switch>
             )}
           </UserContext.Consumer>
         </Router>

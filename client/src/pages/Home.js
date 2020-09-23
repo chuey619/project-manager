@@ -44,7 +44,12 @@ const Home = (props) => {
         team={activeTeam}
       />
 
-      <Box w={{ xs: '40%', sm: '40%', md: '40%', lg: '20%' }} h="100%" mr="5%">
+      <Box
+        minW="225px"
+        w={{ xs: '40%', sm: '40%', md: '40%', lg: '20%' }}
+        h="100%"
+        mr="5%"
+      >
         <TeamSideBar
           onOpen={onOpen}
           setActiveTeam={setActiveTeam}

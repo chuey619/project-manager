@@ -26,9 +26,9 @@ VALUES
 (4, 'test project3');
 
 INSERT INTO tasks
-(project_id, title, description)
+(project_id, title, description, category)
 VALUES
-(4, 'test task1', 'this task is a test1'),
-(4, 'test task2', 'this task is a test2'),
-(4, 'test task3', 'this task is a test3');
+(4, 'test task1', 'this task is a test1', 'To Do'),
+(4, 'test task2', 'this task is a test2', 'To Do'),
+(4, 'test task3', 'this task is a test3', 'Done');
 

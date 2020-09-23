@@ -14,7 +14,7 @@ const TeamSideBar = (props) => {
         position="relative"
         textAlign="left"
         lineHeight="2.5rem"
-        padding={6}
+        padding={2}
         h="100%"
       >
         {!props.teams && <Text>No teams found... Join or create a team!</Text>}
