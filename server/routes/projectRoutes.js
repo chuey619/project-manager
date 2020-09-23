@@ -4,8 +4,12 @@ const projectController = require('../controllers/projectController');
 projectRouter.get('/:project_id', projectController.show);
 projectRouter.post('/:project_id/tasks', projectController.addTask);
 projectRouter.delete(
-  '/:project_id/tasks/:task_id',
+  '/:project_id/tasks/:task_id([0-9]+)',
   projectController.removeTask
+);
+projectRouter.delete(
+  '/:project_id/tasks/:category',
+  projectController.deleteCategory
 );
 projectRouter.put('/:project_id/tasks/:task_id', projectController.updateTask);
 projectRouter.post('/', projectController.create);

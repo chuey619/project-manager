@@ -117,4 +117,17 @@ projectController.updateTask = async (req, res, next) => {
   }
 };
 
+projectController.deleteCategory = async (req, res, next) => {
+  try {
+    const category = req.params.category.toString().replace('%', ' ');
+
+    await Task.deleteByCategory(req.params.team_id, category);
+    res.json({
+      message: 'category deleted',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = projectController;

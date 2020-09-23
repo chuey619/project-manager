@@ -16,6 +16,16 @@ class Task {
       throw new Error('could not find task');
     }
   };
+  static deleteByCategory = async (project_id, category) => {
+    try {
+      return db.manyOrNone(
+        `DELETE FROM tasks WHERE project_id = $1 AND category = $2 RETURNING *`,
+        [project_id, category]
+      );
+    } catch {
+      throw new Error('could not delete category');
+    }
+  };
   save = async () => {
     try {
       let task = await db.one(

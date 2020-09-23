@@ -17,6 +17,7 @@ const ProjectBoard = (props) => {
           height: 'auto',
           backgroundColor: '#63b3ed',
         }}
+        onLaneDelete={props.onLaneDelete}
         onLaneAdd={props.onLaneAdd}
         onCardMoveAcrossLanes={props.onCardMoveAcrossLanes}
         onCardDelete={props.onCardDelete}
