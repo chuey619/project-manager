@@ -6,3 +6,5 @@ export { default as Register } from './Register';
 export { default as TeamSideBar } from './TeamSideBar';
 export { default as Projects } from './Projects';
 export { default as HomeHeader } from './HomeHeader';
+export { default as NewTeam } from './NewTeam';
+export { default as NewProject } from './NewProject';

@@ -103,8 +103,9 @@ const Navbar = (props) => {
         {!isEmpty(user) && (
           <Button
             border="1px"
-            variantColor={'blue'}
             variant="outline"
+            variantColor="#63B3ED"
+            color="#63B3ED"
             onClick={handleLogout}
           >
             Logout

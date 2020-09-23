@@ -27,7 +27,15 @@ class Team {
       `,
         user_id
       );
-      return teams.map((team) => new this(team));
+      const leadTeams = await db.manyOrNone(
+        `
+      SELECT * FROM teams WHERE team_lead = $1
+      `,
+        user_id
+      );
+      const teamsToSend = teams.map((team) => new this(team));
+      const leadTeamsToSend = leadTeams.map((team) => new this(team));
+      return { teams: teamsToSend, leadTeams: leadTeamsToSend };
     } catch {
       throw new Error('could not find teams');
     }

@@ -7,9 +7,11 @@ import {
   AccordionPanel,
   Text,
   Button,
+  useDisclosure,
 } from '@chakra-ui/core';
-
+import { NewProject } from './index';
 const Projects = (props) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box>
       <Accordion>
@@ -30,8 +32,12 @@ const Projects = (props) => {
                   display="flex"
                   justifyContent="space-between"
                 >
-                  <Text>Project Description</Text>
-                  <Button color="#63B3ED" border="3px solid #63B3ED">
+                  <Text>{project.description}</Text>
+                  <Button
+                    variant="outline"
+                    variantColor="#63B3ED"
+                    color="#63B3ED"
+                  >
                     Go to project
                   </Button>
                 </Box>
@@ -44,6 +50,15 @@ const Projects = (props) => {
           </Text>
         )}
       </Accordion>
+      <NewProject
+        shouldFetchProjects={props.shouldFetchProjects}
+        setShouldFetchProjects={props.setShouldFetchProjects}
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpen={onOpen}
+        team={props.team}
+      />
+      <Button onClick={onOpen}>Add a new project</Button>
     </Box>
   );
 };

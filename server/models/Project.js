@@ -62,8 +62,8 @@ class Project {
       const project = db.one(
         `
                   INSERT INTO projects
-                  (name, team_id)
-                  VALUES ($/name/, $/team_id/)
+                  (name, team_id, description)
+                  VALUES ($/name/, $/team_id/, $/description/)
                   RETURNING *
                   `,
         this

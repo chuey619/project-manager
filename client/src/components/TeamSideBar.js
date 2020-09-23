@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Text, Box, Stack, Button } from '@chakra-ui/core';
+import { Text, Box, Stack, Button, IconButton } from '@chakra-ui/core';
 
 const TeamSideBar = (props) => {
   return (
@@ -12,13 +12,32 @@ const TeamSideBar = (props) => {
     >
       <Stack
         position="relative"
-        textAlign="center"
+        textAlign="left"
         lineHeight="2.5rem"
         padding={6}
         h="100%"
       >
-        {props.teams.length > 0 ? (
-          props.teams.map((team, i) => (
+        {!props.teams && <Text>No teams found... Join or create a team!</Text>}
+        {props.teams.leadTeams &&
+          props.teams.leadTeams.map((team, i) => (
+            <Box
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
+            >
+              <Text
+                key={i}
+                onClick={() => props.setActiveTeam(team)}
+                fontWeight="bold"
+                fontSize="1.5rem"
+              >
+                {team.name}
+              </Text>
+              <IconButton size="xs" icon="settings" />
+            </Box>
+          ))}
+        {props.teams.teams &&
+          props.teams.teams.map((team, i) => (
             <Text
               key={i}
               onClick={() => props.setActiveTeam(team)}
@@ -27,11 +46,15 @@ const TeamSideBar = (props) => {
             >
               {team.name}
             </Text>
-          ))
-        ) : (
-          <Text>No teams found... Join or create a team!</Text>
-        )}
-        <Button border="3px solid #63B3ED">Create a team</Button>
+          ))}
+        <Button
+          onClick={props.onOpen}
+          variant="outline"
+          variantColor="#63B3ED"
+          color="#63B3ED"
+        >
+          Create a team
+        </Button>
       </Stack>
     </Box>
   );
