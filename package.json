@@ -2,10 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "heroku-postbuild": "cd client && yarn && yarn build && cp -a ./build/ ../public/"
+    "dev": "nodemon server/server.js",
+    "heroku-postbuild": "cd server/client && yarn && yarn build && cp -a ./build/ ../public/"
   },
   "author": "",
   "license": "ISC",
