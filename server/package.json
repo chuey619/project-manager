@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "heroku-postbuild": "cd client && yarn && yarn build && cp -a ./build/ ../public/"
   },
   "author": "",
   "license": "ISC",
