@@ -1,6 +1,7 @@
 const Task = require('../models/Task');
 const Project = require('../models/Project');
-
+const Message = require('../models/Message');
+const User = require('../models/User');
 const projectController = {};
 
 projectController.show = async (req, res, next) => {
@@ -124,6 +125,38 @@ projectController.deleteCategory = async (req, res, next) => {
     await Task.deleteByCategory(req.params.team_id, category);
     res.json({
       message: 'category deleted',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+projectController.getMessages = async (req, res, next) => {
+  try {
+    const project_id = parseInt(req.params.project_id);
+    const messages = await Message.getAllForProject(project_id);
+
+    res.json({
+      message: 'ok',
+      data: messages,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+projectController.sendMessage = async (req, res, next) => {
+  try {
+    const project_id = parseInt(req.params.project_id);
+    const message = new Message({
+      body: req.body.message,
+      sender_id: req.user.id,
+      project_id: project_id,
+      sender: req.user.name,
+    });
+    await message.save();
+
+    res.json({
+      message: 'ok',
+      data: { message },
     });
   } catch (error) {
     next(error);

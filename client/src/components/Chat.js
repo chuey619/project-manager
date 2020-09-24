@@ -1,14 +1,37 @@
-import React from 'react';
-import { Box } from '@chakra-ui/core';
+import React, { useEffect } from 'react';
+import { Box, Textarea } from '@chakra-ui/core';
 
-const Chat = () => {
+const Chat = (props) => {
+  useEffect(() => {
+    const getMessages = async () => {
+      const url = `/teams/${props.team_id}/projects/${props.project_id}/messages`;
+      const response = await fetch(url);
+      const json = await response.json();
+      console.log(json);
+      props.setMessages(json.data);
+    };
+
+    getMessages();
+  }, []);
   return (
-    <Box
-      h="100%"
-      border="1px solid lightgrey"
-      boxShadow=" 0px 0px 17px -1px rgba(173,173,173,1)"
-      borderRadius="20px"
-    ></Box>
+    <div className="card">
+      <form onSubmit={props.sendMessage}>
+        <h1>Messenger</h1>
+        <div>
+          <Textarea
+            name="message"
+            onChange={(e) => props.onTextChange(e)}
+            value={props.message}
+            label="Message"
+          />
+        </div>
+        <button>Send</button>
+      </form>
+      <div className="render-chat">
+        <h1>Chat Log</h1>
+        {props.renderChat()}
+      </div>
+    </div>
   );
 };
 

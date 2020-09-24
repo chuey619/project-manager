@@ -3,6 +3,8 @@ const projectController = require('../controllers/projectController');
 
 projectRouter.get('/:project_id', projectController.show);
 projectRouter.post('/:project_id/tasks', projectController.addTask);
+projectRouter.get('/:project_id/messages', projectController.getMessages);
+projectRouter.post('/:project_id/messages', projectController.sendMessage);
 projectRouter.delete(
   '/:project_id/tasks/:task_id([0-9]+)',
   projectController.removeTask
