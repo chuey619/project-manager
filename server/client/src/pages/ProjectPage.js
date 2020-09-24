@@ -21,7 +21,7 @@ const ProjectPage = (props) => {
     socketRef.current.on('card_change', () => {
       setShouldFetch(!shouldFetch);
     });
-  }, [data]);
+  }, [dataLoaded]);
 
   useEffect(() => {
     const getData = async () => {
@@ -29,6 +29,7 @@ const ProjectPage = (props) => {
       let response = await fetch(url);
       let json = await response.json();
       setData(json);
+      setDataLoaded(false);
       setDataLoaded(true);
     };
     getData();
