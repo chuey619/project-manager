@@ -67,25 +67,15 @@ server.use((err, req, res, next) => {
 const http = require('http').createServer(server);
 const io = require('socket.io')(http);
 io.on('connection', (socket) => {
-  console.log('a user connected');
-
   socket.on('join_room', (room) => {
-    console.log('user joined room', room);
     socket.join(room);
   });
   socket.on('card_change', (room) => {
+    console.log('card change');
     io.in(room).emit('card_change', room);
   });
   socket.on('message', ({ room, message }) => {
     io.in(room).emit('message', { message, room });
-  });
-
-  socket.on('typing', ({ room }) => {
-    socket.to(room).emit('typing', 'Someone is typing');
-  });
-
-  socket.on('stopped_typing', ({ room }) => {
-    socket.to(room).emit('stopped_typing');
   });
 });
 

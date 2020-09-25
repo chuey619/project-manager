@@ -13,23 +13,26 @@ const ProjectPage = (props) => {
     socketRef.current = io.connect('/');
     socketRef.current.emit('join_room', props.location.state.name);
     socketRef.current.on('message', (message) => {
-      console.log(message);
       receivedMessage(message.message);
     });
-  }, []);
-  useEffect(() => {
     socketRef.current.on('card_change', () => {
-      setShouldFetch(!shouldFetch);
+      console.log('card_change');
+      recievedCardChange();
     });
-  }, [dataLoaded]);
-
+    return () => {
+      socketRef.current.off('card_change');
+    };
+  }, []);
+  const recievedCardChange = () => {
+    setShouldFetch((shouldFetch) => !shouldFetch);
+  };
   useEffect(() => {
     const getData = async () => {
       let url = `/teams/${props.location.state.team_id}/projects/${props.location.state.id}`;
       let response = await fetch(url);
       let json = await response.json();
       setData(json);
-      setDataLoaded(false);
+
       setDataLoaded(true);
     };
     getData();
@@ -120,7 +123,6 @@ const ProjectPage = (props) => {
     socketRef.current.emit('card_change', props.location.state.name);
   };
   const onCardMoveAcrossLanes = async (fromLane, toLane, cardId) => {
-    console.log(cardId, fromLane, toLane);
     const url = `/teams/${props.location.state.team_id}/projects/${props.location.state.id}/tasks/${cardId}`;
     await fetch(url, {
       method: 'PUT',

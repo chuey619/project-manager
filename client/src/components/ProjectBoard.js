@@ -24,7 +24,7 @@ const ProjectBoard = (props) => {
         onCardAdd={props.onCardAdd}
         editable={true}
         canAddLanes={true}
-        editLaneTitle={true}
+        editLaneTitle={false}
         data={data}
       />
     </Box>
