@@ -45,13 +45,13 @@ const authRoutes = require('./routes/authRouter');
 server.use('/auth', authRoutes);
 const projectRoutes = require('./routes/projectRoutes');
 server.use('/projects', projectRoutes);
+server.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 server.use('*', (req, res) => {
   res.status(404).json({
     message: 'not found',
   });
-});
-server.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 server.use((err, req, res, next) => {
