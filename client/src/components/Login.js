@@ -43,20 +43,15 @@ const Login = () => {
         user: json?.data?.user,
       });
       history.push('/home');
-    } else if (json?.data?.errors) {
-      const errors = json?.data?.errors;
-      if (errors) {
-        errors.forEach(({ title, description }) => {
-          toast({
-            position: 'top',
-            title,
-            description,
-            status: 'error',
-            duration: 7000,
-            isClosable: true,
-          });
-        });
-      }
+    } else {
+      toast({
+        position: 'top',
+        title: 'Invalid login',
+        description: 'Incorrect username or password',
+        status: 'error',
+        duration: 7000,
+        isClosable: true,
+      });
     }
   };
   return (

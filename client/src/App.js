@@ -38,7 +38,7 @@ function App() {
                   path="/"
                   render={() => (
                     <FullWidth>
-                      <Landing />
+                      <Landing user={value} />
                     </FullWidth>
                   )}
                 />

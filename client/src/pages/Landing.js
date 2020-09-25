@@ -1,9 +1,11 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { Login, Register } from '../components';
 import { Flex, Box, Heading, Text } from '@chakra-ui/core';
-const Landing = () => {
+const Landing = (props) => {
   return (
     <Box>
+      {props.user[0].user?.id && <Redirect to="/home" />}
       <Heading color={'#726E75'}>Welcome to Project Manager</Heading>
       <Text color={'#726E75'}>Register or Sign up to continue!</Text>
       <Box
