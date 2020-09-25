@@ -7,7 +7,6 @@ const Chat = (props) => {
       const url = `/teams/${props.team_id}/projects/${props.project_id}/messages`;
       const response = await fetch(url);
       const json = await response.json();
-      console.log(json);
       props.setMessages(json.data);
     };
 

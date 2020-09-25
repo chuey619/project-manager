@@ -46,7 +46,7 @@ const Navbar = (props) => {
       justify="space-between"
       wrap="wrap"
       padding="1.5rem"
-      bg="#FFFFFB"
+      bg="white"
       color="blue.300"
       gridArea="nav"
       {...props}
@@ -91,8 +91,8 @@ const Navbar = (props) => {
           <NavbarItems>About</NavbarItems>
         </Link>
 
-        <Link isDisabled={isEmpty(user) ? true : false} to="/profile">
-          <NavbarItems>Teams</NavbarItems>
+        <Link isDisabled={isEmpty(user) ? true : false} to="/home">
+          <NavbarItems>Home</NavbarItems>
         </Link>
       </Box>
 
@@ -104,7 +104,7 @@ const Navbar = (props) => {
           <Button
             border="1px"
             variant="outline"
-            variantColor="#63B3ED"
+            variantColor="blue.300"
             color="#63B3ED"
             onClick={handleLogout}
           >

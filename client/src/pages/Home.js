@@ -5,7 +5,7 @@ import {
   HomeHeader,
   Projects,
   NewTeam,
-  NewProject,
+  ManageTeam,
 } from '../components';
 import { Redirect } from 'react-router-dom';
 const Home = (props) => {
@@ -13,24 +13,26 @@ const Home = (props) => {
   const [projects, setProjects] = useState([]);
   const [activeTeam, setActiveTeam] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [members, setMembers] = useState([]);
   const [shouldFetchTeams, setShouldFetchTeams] = useState(false);
   const [shouldFetchProjects, setShouldFetchProjects] = useState(false);
   useEffect(() => {
     const getTeams = async () => {
       const res = await fetch('/teams');
       const json = await res.json();
-      setTeams(json.data.teams);
+      setTeams(json.data?.teams);
     };
+
     props.user[0]?.user && getTeams();
   }, [shouldFetchTeams]);
   useEffect(() => {
-    const getProjects = async () => {
+    const getTeamData = async () => {
       const res = await fetch(`/teams/${activeTeam.id}`);
       const json = await res.json();
-      setProjects(json?.data?.projects);
+      setProjects(json.data?.projects);
+      setMembers(json.data?.members);
     };
-    activeTeam && getProjects();
+    activeTeam != {} && getTeamData();
   }, [activeTeam, shouldFetchProjects]);
   return (
     <Box display="flex" borderRadius="20px" height={'80%'} width={'100%'}>
@@ -51,9 +53,12 @@ const Home = (props) => {
         mr="5%"
       >
         <TeamSideBar
+          username={props.user[0]?.user?.username}
           onOpen={onOpen}
           setActiveTeam={setActiveTeam}
           teams={teams}
+          setShouldFetchTeams={setShouldFetchTeams}
+          shouldFetchTeams={shouldFetchTeams}
         />
       </Box>
       <Box w="80%" h="80%">

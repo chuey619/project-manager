@@ -56,16 +56,19 @@ teamsController.create = async (req, res, next) => {
 
 teamsController.removeMember = async (req, res, next) => {
   try {
+    const username = req.params.member_username.replace('%', ' ');
     const team_id = parseInt(req.params.team_id);
+    console.log(team_id, req.params.team_id);
     const team = await Team.findById(team_id);
-    if (req.user.id === team.team_lead) {
-      team.removeMember(req.params.member_id);
+    const user = await User.findByUsername(username);
+    if (req.user.id === team.team_lead || req.user.id === user.id) {
+      await team.removeMember(user.id);
       res.json({
         message: 'member removed',
       });
     } else {
       res.json({
-        message: 'only the team lead can remove members',
+        error: 'only the team lead can remove members',
       });
     }
   } catch (error) {
@@ -77,14 +80,17 @@ teamsController.addMember = async (req, res, next) => {
   try {
     const team_id = parseInt(req.params.team_id);
     const team = await Team.findById(team_id);
+    console.log(req.body);
+    const member = await User.findByUsername(req.body.member);
+    console.log(member);
     if (req.user.id === team.team_lead) {
-      team.addMember(req.params.member_id);
+      team.addMember(member.id);
       res.json({
         message: 'member added',
       });
     } else {
       res.json({
-        message: 'only the team lead can add members',
+        error: 'only the team lead can add members',
       });
     }
   } catch (error) {

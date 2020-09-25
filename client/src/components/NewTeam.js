@@ -4,9 +4,7 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
-  ModalCloseButton,
   FormControl,
   Input,
   FormLabel,
@@ -65,7 +63,7 @@ const NewTeam = (props) => {
                 <Box>
                   <Button
                     variant="outline"
-                    variantColor="#63B3ED"
+                    variantColor="blue.300"
                     color="#63B3ED"
                     mr={3}
                     mt={3}
