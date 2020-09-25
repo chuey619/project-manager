@@ -16,7 +16,6 @@ const ProjectPage = (props) => {
       receivedMessage(message.message);
     });
     socketRef.current.on('card_change', () => {
-      console.log('card_change');
       recievedCardChange();
     });
     return () => {
