@@ -32,6 +32,42 @@ const TeamSideBar = (props) => {
     });
     props.setShouldFetchTeams(!props.shouldFetchTeams);
   };
+  const renderAlertDialogue = () => {
+    return (
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay />
+        <AlertDialogContent>
+          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            Leave team
+          </AlertDialogHeader>
+
+          <AlertDialogBody>
+            Are you sure? You can't undo this action afterwards.
+          </AlertDialogBody>
+
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              variantColor="red"
+              onClick={() => {
+                onClose();
+                leaveTeam(clickedTeam.id);
+              }}
+              ml={3}
+            >
+              Leave
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+  };
   return (
     <Box h="100%" bg="#515052">
       <Stack
@@ -88,39 +124,6 @@ const TeamSideBar = (props) => {
                   icon="small-close"
                 />
               </Box>
-              <AlertDialog
-                key={i}
-                isOpen={isOpen}
-                leastDestructiveRef={cancelRef}
-                onClose={onClose}
-              >
-                <AlertDialogOverlay />
-                <AlertDialogContent>
-                  <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                    Leave team
-                  </AlertDialogHeader>
-
-                  <AlertDialogBody>
-                    Are you sure? You can't undo this action afterwards.
-                  </AlertDialogBody>
-
-                  <AlertDialogFooter>
-                    <Button ref={cancelRef} onClick={onClose}>
-                      Cancel
-                    </Button>
-                    <Button
-                      variantColor="red"
-                      onClick={() => {
-                        onClose();
-                        leaveTeam(clickedTeam.id);
-                      }}
-                      ml={3}
-                    >
-                      Leave
-                    </Button>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
             </>
           ))}
         <Button
@@ -136,6 +139,7 @@ const TeamSideBar = (props) => {
         >
           Create a team
         </Button>
+        {renderAlertDialogue()}
       </Stack>
     </Box>
   );

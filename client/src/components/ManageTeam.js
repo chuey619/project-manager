@@ -32,6 +32,143 @@ const ManageTeam = (props) => {
   const onCloseAlert = () => {
     setIsOpenAlert(false);
   };
+  const renderModal = () => {
+    return (
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        closeOnOverlayClick={false}
+        size="xl"
+      >
+        <ModalOverlay w="100%" h="100%" bg="rgb(0 0 0 / 50%)" />
+        <ModalContent
+          bg="white"
+          bgPos="center"
+          color="black"
+          borderRadius="lg"
+          boxShadow="1px 3px 32px #63B3ED"
+        >
+          <ModalHeader color={'#63B3ED'}>Manage {props.team.name}</ModalHeader>
+          <ModalBody>
+            <form onSubmit={(e) => handleSubmit(e, 'POST')}>
+              <FormControl>
+                <FormLabel color={'#63B3ED'}>Add a member</FormLabel>
+                <Input
+                  name="member"
+                  value={memberToAdd}
+                  onChange={(e) => handleChange(e, 'add')}
+                  placeholder={`User's username`}
+                />
+              </FormControl>
+              <FormControl>
+                <Box>
+                  <Button
+                    variant="outline"
+                    variantColor="blue.300"
+                    color="#63B3ED"
+                    mr={3}
+                    mt={3}
+                    type="submit"
+                  >
+                    Submit!
+                  </Button>
+                </Box>
+              </FormControl>
+            </form>
+            <form onSubmit={(e) => handleSubmit(e, 'DELETE')}>
+              <FormControl>
+                <FormLabel color={'#63B3ED'}>Remove a member</FormLabel>
+                <Select
+                  placeholder="Select a team member"
+                  onChange={(e) => handleChange(e, 'remove')}
+                >
+                  {props.members?.length > 0 &&
+                    props.members?.map((member, i) => {
+                      return (
+                        <option key={i} value={member.username}>
+                          {member.username}
+                        </option>
+                      );
+                    })}
+                </Select>
+              </FormControl>
+              <FormControl>
+                <Box>
+                  <Button
+                    variant="outline"
+                    variantColor="blue.300"
+                    color="#63B3ED"
+                    mr={3}
+                    mt={3}
+                    type="submit"
+                  >
+                    Submit!
+                  </Button>
+                </Box>
+              </FormControl>
+            </form>
+            <Box d="flex">
+              <Button
+                onClick={onClose}
+                variant="outline"
+                variantColor="red"
+                mr={3}
+                mt={3}
+              >
+                Close
+              </Button>
+              <Button
+                mt={3}
+                variant="outline"
+                variantColor="red"
+                onClick={() => setIsOpenAlert(true)}
+              >
+                Delete team
+              </Button>
+            </Box>
+            {renderAlertDialogue()}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    );
+  };
+  const renderAlertDialogue = () => {
+    return (
+      <AlertDialog
+        isOpen={isOpenAlert}
+        leastDestructiveRef={cancelRef}
+        onClose={onCloseAlert}
+      >
+        <AlertDialogOverlay />
+        <AlertDialogContent>
+          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            Delete Team
+          </AlertDialogHeader>
+
+          <AlertDialogBody>
+            Are you sure? You can't undo this action afterwards.
+          </AlertDialogBody>
+
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={onCloseAlert}>
+              Cancel
+            </Button>
+            <Button
+              variantColor="red"
+              onClick={() => {
+                onCloseAlert();
+                deleteTeam(props.team);
+                onClose();
+              }}
+              ml={3}
+            >
+              Delete
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+  };
   const deleteTeam = async (team) => {
     const url = `/teams/${team.id}`;
     const response = await fetch(url, {
@@ -125,153 +262,23 @@ const ManageTeam = (props) => {
       : setMemberToRemove(e.target.value);
   };
   return (
-    <>
-      <Box
-        onClick={() => props.setActiveTeam(props.team)}
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
+    <Box
+      onClick={() => props.setActiveTeam(props.team)}
+      display="flex"
+      flexDirection="row"
+      justifyContent="space-between"
+    >
+      <Text
+        pl={{ xs: '0', sm: '0', md: '5%', lg: '5%', xl: '5%' }}
+        fontSize="1.5rem"
+        color="white"
+        cursor="pointer"
       >
-        <Text
-          pl={{ xs: '0', sm: '0', md: '5%', lg: '5%', xl: '5%' }}
-          fontSize="1.5rem"
-          color="white"
-          cursor="pointer"
-        >
-          {props.team.name}
-        </Text>
-        <IconButton onClick={onOpen} size="xs" icon="settings" />
-      </Box>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        closeOnOverlayClick={false}
-        size="xl"
-      >
-        <ModalOverlay w="100%" h="100%" bg="rgb(0 0 0 / 50%)" />
-        <ModalContent
-          bg="white"
-          bgPos="center"
-          color="black"
-          borderRadius="lg"
-          boxShadow="1px 3px 32px #63B3ED"
-        >
-          <ModalHeader color={'#63B3ED'}>Manage {props.team.name}</ModalHeader>
-          <ModalBody>
-            <form onSubmit={(e) => handleSubmit(e, 'POST')}>
-              <FormControl>
-                <FormLabel color={'#63B3ED'}>Add a member</FormLabel>
-                <Input
-                  name="member"
-                  value={memberToAdd}
-                  onChange={(e) => handleChange(e, 'add')}
-                  placeholder={`User's username`}
-                />
-              </FormControl>
-              <FormControl>
-                <Box>
-                  <Button
-                    variant="outline"
-                    variantColor="blue.300"
-                    color="#63B3ED"
-                    mr={3}
-                    mt={3}
-                    type="submit"
-                  >
-                    Submit!
-                  </Button>
-                </Box>
-              </FormControl>
-            </form>
-            <form onSubmit={(e) => handleSubmit(e, 'DELETE')}>
-              <FormControl>
-                <FormLabel color={'#63B3ED'}>Remove a member</FormLabel>
-                <Select
-                  placeholder="Select a team member"
-                  onChange={(e) => handleChange(e, 'remove')}
-                >
-                  {props.members?.length > 0 &&
-                    props.members?.map((member, i) => {
-                      return (
-                        <option key={i} value={member.username}>
-                          {member.username}
-                        </option>
-                      );
-                    })}
-                </Select>
-              </FormControl>
-              <FormControl>
-                <Box>
-                  <Button
-                    variant="outline"
-                    variantColor="blue.300"
-                    color="#63B3ED"
-                    mr={3}
-                    mt={3}
-                    type="submit"
-                  >
-                    Submit!
-                  </Button>
-                </Box>
-              </FormControl>
-            </form>
-            <Box d="flex">
-              <Button
-                onClick={onClose}
-                variant="outline"
-                variantColor="red"
-                mr={3}
-                mt={3}
-              >
-                Close
-              </Button>
-              <Button
-                mt={3}
-                variant="outline"
-                variantColor="red"
-                onClick={() => setIsOpenAlert(true)}
-              >
-                Delete team
-              </Button>
-            </Box>
-
-            <AlertDialog
-              isOpen={isOpenAlert}
-              leastDestructiveRef={cancelRef}
-              onClose={onCloseAlert}
-            >
-              <AlertDialogOverlay />
-              <AlertDialogContent>
-                <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                  Delete Team
-                </AlertDialogHeader>
-
-                <AlertDialogBody>
-                  Are you sure? You can't undo this action afterwards.
-                </AlertDialogBody>
-
-                <AlertDialogFooter>
-                  <Button ref={cancelRef} onClick={onCloseAlert}>
-                    Cancel
-                  </Button>
-                  <Button
-                    variantColor="red"
-                    onClick={() => {
-                      onCloseAlert();
-                      deleteTeam(props.team);
-                      onClose();
-                    }}
-                    ml={3}
-                  >
-                    Delete
-                  </Button>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
+        {props.team.name}
+      </Text>
+      <IconButton onClick={onOpen} size="xs" icon="settings" />
+      {renderModal()}
+    </Box>
   );
 };
 

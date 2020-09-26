@@ -56,7 +56,42 @@ const Projects = (props) => {
       });
     }
   };
+  const renderAlertDialogue = () => {
+    return (
+      <AlertDialog
+        isOpen={isOpenAlert}
+        leastDestructiveRef={cancelRef}
+        onClose={onCloseAlert}
+      >
+        <AlertDialogOverlay />
+        <AlertDialogContent>
+          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            Delete Project
+          </AlertDialogHeader>
 
+          <AlertDialogBody>
+            Are you sure? You can't undo this action afterwards.
+          </AlertDialogBody>
+
+          <AlertDialogFooter>
+            <Button ref={cancelRef} onClick={onCloseAlert}>
+              Cancel
+            </Button>
+            <Button
+              variantColor="red"
+              onClick={() => {
+                onCloseAlert();
+                deleteProject(project);
+              }}
+              ml={3}
+            >
+              Delete
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+  };
   const renderProjects = () => {
     return (
       <Accordion>
@@ -147,38 +182,7 @@ const Projects = (props) => {
         onOpen={onOpen}
         team={props.team}
       />
-      <AlertDialog
-        isOpen={isOpenAlert}
-        leastDestructiveRef={cancelRef}
-        onClose={onCloseAlert}
-      >
-        <AlertDialogOverlay />
-        <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Delete Project
-          </AlertDialogHeader>
-
-          <AlertDialogBody>
-            Are you sure? You can't undo this action afterwards.
-          </AlertDialogBody>
-
-          <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onCloseAlert}>
-              Cancel
-            </Button>
-            <Button
-              variantColor="red"
-              onClick={() => {
-                onCloseAlert();
-                deleteProject(project);
-              }}
-              ml={3}
-            >
-              Delete
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      {renderAlertDialogue()}
     </Box>
   );
 };
