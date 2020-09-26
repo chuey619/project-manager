@@ -9,14 +9,8 @@ import {
   Button,
   useDisclosure,
   useToast,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
 } from '@chakra-ui/core';
-import { NewProject, CustomLink as Link } from './index';
+import { Alert, NewProject, CustomLink as Link } from './index';
 const Projects = (props) => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
   const [project, setProject] = useState({});
@@ -58,38 +52,15 @@ const Projects = (props) => {
   };
   const renderAlertDialogue = () => {
     return (
-      <AlertDialog
-        isOpen={isOpenAlert}
-        leastDestructiveRef={cancelRef}
-        onClose={onCloseAlert}
-      >
-        <AlertDialogOverlay />
-        <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Delete Project
-          </AlertDialogHeader>
-
-          <AlertDialogBody>
-            Are you sure? You can't undo this action afterwards.
-          </AlertDialogBody>
-
-          <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onCloseAlert}>
-              Cancel
-            </Button>
-            <Button
-              variantColor="red"
-              onClick={() => {
-                onCloseAlert();
-                deleteProject(project);
-              }}
-              ml={3}
-            >
-              Delete
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <Alert
+        action="Delete"
+        itemType={'Project'}
+        itemToDelete={project}
+        deleteFunction={deleteProject}
+        isOpenAlert={isOpenAlert}
+        cancelRef={cancelRef}
+        onCloseAlert={onCloseAlert}
+      />
     );
   };
   const renderProjects = () => {

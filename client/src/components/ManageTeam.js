@@ -15,19 +15,14 @@ import {
   IconButton,
   useToast,
   Select,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
 } from '@chakra-ui/core';
+import { Alert } from './index';
 const ManageTeam = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [memberToAdd, setMemberToAdd] = useState('');
   const [memberToRemove, setMemberToRemove] = useState('');
   const [isOpenAlert, setIsOpenAlert] = useState(false);
-
+  const toast = useToast();
   const cancelRef = useRef();
   const onCloseAlert = () => {
     setIsOpenAlert(false);
@@ -134,39 +129,16 @@ const ManageTeam = (props) => {
   };
   const renderAlertDialogue = () => {
     return (
-      <AlertDialog
-        isOpen={isOpenAlert}
-        leastDestructiveRef={cancelRef}
-        onClose={onCloseAlert}
-      >
-        <AlertDialogOverlay />
-        <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Delete Team
-          </AlertDialogHeader>
-
-          <AlertDialogBody>
-            Are you sure? You can't undo this action afterwards.
-          </AlertDialogBody>
-
-          <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onCloseAlert}>
-              Cancel
-            </Button>
-            <Button
-              variantColor="red"
-              onClick={() => {
-                onCloseAlert();
-                deleteTeam(props.team);
-                onClose();
-              }}
-              ml={3}
-            >
-              Delete
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <Alert
+        action="Delete"
+        itemType={'Team'}
+        itemToDelete={props.team}
+        deleteFunction={deleteTeam}
+        isOpenAlert={isOpenAlert}
+        cancelRef={cancelRef}
+        onCloseAlert={onCloseAlert}
+        onClose={onClose}
+      />
     );
   };
   const deleteTeam = async (team) => {
@@ -200,7 +172,6 @@ const ManageTeam = (props) => {
     }
   };
 
-  const toast = useToast();
   const handleSubmit = async (evt, method) => {
     evt.preventDefault();
     let url = '';

@@ -26,7 +26,7 @@ const NewProject = (props) => {
   };
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    let response = await fetch(`/teams/${props.team.id}/projects`, {
+    await fetch(`/teams/${props.team.id}/projects`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

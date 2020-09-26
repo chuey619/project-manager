@@ -11,3 +11,4 @@ export { default as NewProject } from './NewProject';
 export { default as ProjectBoard } from './ProjectBoard';
 export { default as Chat } from './Chat';
 export { default as ManageTeam } from './ManageTeam';
+export { default as Alert } from './Alert';

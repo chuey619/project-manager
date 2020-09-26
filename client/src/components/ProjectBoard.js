@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Board from 'react-trello';
 import { Box } from '@chakra-ui/core';
 

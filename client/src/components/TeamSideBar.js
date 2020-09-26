@@ -1,19 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { ManageTeam } from './index';
-import {
-  Text,
-  Box,
-  Stack,
-  Button,
-  IconButton,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
-  Heading,
-} from '@chakra-ui/core';
+import { ManageTeam, Alert } from './index';
+import { Text, Box, Stack, Button, IconButton, Heading } from '@chakra-ui/core';
 
 const TeamSideBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,8 +9,8 @@ const TeamSideBar = (props) => {
   const onClose = () => {
     setIsOpen(false);
   };
-  const leaveTeam = async (teamId) => {
-    const url = `/teams/${teamId}/members/${props.username}`;
+  const leaveTeam = async (team) => {
+    const url = `/teams/${team.id}/members/${props.username}`;
     await fetch(url, {
       method: 'DELETE',
       headers: {
@@ -34,38 +21,15 @@ const TeamSideBar = (props) => {
   };
   const renderAlertDialogue = () => {
     return (
-      <AlertDialog
-        isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-      >
-        <AlertDialogOverlay />
-        <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Leave team
-          </AlertDialogHeader>
-
-          <AlertDialogBody>
-            Are you sure? You can't undo this action afterwards.
-          </AlertDialogBody>
-
-          <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button
-              variantColor="red"
-              onClick={() => {
-                onClose();
-                leaveTeam(clickedTeam.id);
-              }}
-              ml={3}
-            >
-              Leave
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <Alert
+        action="Leave"
+        itemType={'Team'}
+        itemToDelete={clickedTeam}
+        deleteFunction={leaveTeam}
+        isOpenAlert={isOpen}
+        cancelRef={cancelRef}
+        onCloseAlert={onClose}
+      />
     );
   };
   return (
