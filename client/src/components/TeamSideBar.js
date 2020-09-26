@@ -53,9 +53,12 @@ const TeamSideBar = (props) => {
         {props.teams.leadTeams &&
           props.teams.leadTeams.map((team, i) => (
             <ManageTeam
+              members={props.members}
               team={team}
               key={i * 2}
               setActiveTeam={props.setActiveTeam}
+              setShouldFetchTeams={props.setShouldFetchTeams}
+              shouldFetchTeams={props.shouldFetchTeams}
             />
           ))}
         {props.teams.teams &&

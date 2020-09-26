@@ -2,6 +2,7 @@ const Task = require('../models/Task');
 const Project = require('../models/Project');
 const Message = require('../models/Message');
 const User = require('../models/User');
+const Team = require('../models/Team');
 const projectController = {};
 
 projectController.show = async (req, res, next) => {
@@ -61,11 +62,19 @@ projectController.create = async (req, res, next) => {
 projectController.delete = async (req, res, next) => {
   try {
     const project_id = parseInt(req.params.project_id);
+    const team_id = parseInt(req.params.team_id);
+    const team = await Team.findById(team_id);
     const project = await Project.findById(project_id);
-    await project.delete();
-    res.json({
-      message: 'project deleted',
-    });
+    if (req.user.id === team.team_lead) {
+      await project.delete();
+      res.json({
+        message: 'project deleted',
+      });
+    } else {
+      res.json({
+        message: 'Only the team lead can delete a project',
+      });
+    }
   } catch (error) {
     next(error);
   }

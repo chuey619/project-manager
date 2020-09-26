@@ -12,11 +12,12 @@ function FullWidth({ children }) {
         "footer"
       `}
       gridTemplateRows="[top] auto [main-start] 100vh [main-end] 5vh [bottom]"
-      gridTemplateColumns="[main-start] 90vw [main-end] "
+      gridTemplateColumns="[main-start] 100vw [main-end] "
       height="auto"
       justifyContent="center"
       boxShadow="0px -1px 13px 7px rgba(230,230,230,1)"
       minW="375px"
+      overflow="auto"
     >
       <Navbar />
       {children}

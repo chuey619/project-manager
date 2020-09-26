@@ -102,10 +102,16 @@ teamsController.delete = async (req, res, next) => {
   try {
     const team_id = parseInt(req.params.team_id);
     const team = await Team.findById(team_id);
-    await team.delete();
-    res.json({
-      message: 'team deleted!',
-    });
+    if (req.user.id === team.team_lead) {
+      await team.delete();
+      res.json({
+        message: 'team deleted',
+      });
+    } else {
+      res.json({
+        message: 'only the team lead can delete the team',
+      });
+    }
   } catch (error) {
     next(error);
   }

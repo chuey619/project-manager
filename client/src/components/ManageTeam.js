@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -14,11 +14,55 @@ import {
   Text,
   IconButton,
   useToast,
+  Select,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from '@chakra-ui/core';
 const ManageTeam = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [memberToAdd, setMemberToAdd] = useState('');
   const [memberToRemove, setMemberToRemove] = useState('');
+  const [isOpenAlert, setIsOpenAlert] = useState(false);
+
+  const cancelRef = useRef();
+  const onCloseAlert = () => {
+    setIsOpenAlert(false);
+  };
+  const deleteTeam = async (team) => {
+    const url = `/teams/${team.id}`;
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const json = await response.json();
+    if (json.message === 'team deleted') {
+      toast({
+        position: 'top',
+        title: 'Team deleted',
+        description: `${team.name} was deleted`,
+        status: 'success',
+        duration: 7000,
+        isClosable: true,
+      });
+      props.setShouldFetchTeams(!props.shouldFetchTeams);
+    } else {
+      toast({
+        position: 'top',
+        title: 'Could not delete team',
+        description: `Only the team lead can delete teams`,
+        status: 'success',
+        duration: 7000,
+        isClosable: true,
+      });
+    }
+  };
+
   const toast = useToast();
   const handleSubmit = async (evt, method) => {
     evt.preventDefault();
@@ -82,9 +126,13 @@ const ManageTeam = (props) => {
   };
   return (
     <>
-      <Box display="flex" flexDirection="row" justifyContent="space-between">
+      <Box
+        onClick={() => props.setActiveTeam(props.team)}
+        display="flex"
+        flexDirection="row"
+        justifyContent="space-between"
+      >
         <Text
-          onClick={() => props.setActiveTeam(props.team)}
           pl={{ xs: '0', sm: '0', md: '5%', lg: '5%', xl: '5%' }}
           fontSize="1.5rem"
           color="white"
@@ -117,6 +165,7 @@ const ManageTeam = (props) => {
                   name="member"
                   value={memberToAdd}
                   onChange={(e) => handleChange(e, 'add')}
+                  placeholder={`User's username`}
                 />
               </FormControl>
               <FormControl>
@@ -137,11 +186,19 @@ const ManageTeam = (props) => {
             <form onSubmit={(e) => handleSubmit(e, 'DELETE')}>
               <FormControl>
                 <FormLabel color={'#63B3ED'}>Remove a member</FormLabel>
-                <Input
-                  name="member"
-                  value={memberToRemove}
+                <Select
+                  placeholder="Select a team member"
                   onChange={(e) => handleChange(e, 'remove')}
-                />
+                >
+                  {props.members?.length > 0 &&
+                    props.members?.map((member, i) => {
+                      return (
+                        <option key={i} value={member.username}>
+                          {member.username}
+                        </option>
+                      );
+                    })}
+                </Select>
               </FormControl>
               <FormControl>
                 <Box>
@@ -158,15 +215,59 @@ const ManageTeam = (props) => {
                 </Box>
               </FormControl>
             </form>
-            <Button
-              onClick={onClose}
-              variant="outline"
-              variantColor="red"
-              mr={3}
-              mt={3}
+            <Box d="flex">
+              <Button
+                onClick={onClose}
+                variant="outline"
+                variantColor="red"
+                mr={3}
+                mt={3}
+              >
+                Close
+              </Button>
+              <Button
+                mt={3}
+                variant="outline"
+                variantColor="red"
+                onClick={() => setIsOpenAlert(true)}
+              >
+                Delete team
+              </Button>
+            </Box>
+
+            <AlertDialog
+              isOpen={isOpenAlert}
+              leastDestructiveRef={cancelRef}
+              onClose={onCloseAlert}
             >
-              Close
-            </Button>
+              <AlertDialogOverlay />
+              <AlertDialogContent>
+                <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                  Delete Team
+                </AlertDialogHeader>
+
+                <AlertDialogBody>
+                  Are you sure? You can't undo this action afterwards.
+                </AlertDialogBody>
+
+                <AlertDialogFooter>
+                  <Button ref={cancelRef} onClick={onCloseAlert}>
+                    Cancel
+                  </Button>
+                  <Button
+                    variantColor="red"
+                    onClick={() => {
+                      onCloseAlert();
+                      deleteTeam(props.team);
+                      onClose();
+                    }}
+                    ml={3}
+                  >
+                    Delete
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </ModalBody>
         </ModalContent>
       </Modal>

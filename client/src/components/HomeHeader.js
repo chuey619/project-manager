@@ -5,7 +5,6 @@ const HomeHeader = (props) => {
   return (
     <Box>
       <Heading>Welcome {props.name}</Heading>
-      <Text>Select a team to view projects</Text>
     </Box>
   );
 };

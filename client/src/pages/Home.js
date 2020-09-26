@@ -53,6 +53,7 @@ const Home = (props) => {
           teams={teams}
           setShouldFetchTeams={setShouldFetchTeams}
           shouldFetchTeams={shouldFetchTeams}
+          members={members}
         />
       </Box>
       <Box w="80%" h="80%">
