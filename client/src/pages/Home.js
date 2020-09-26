@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, useDisclosure } from '@chakra-ui/core';
-import {
-  TeamSideBar,
-  HomeHeader,
-  Projects,
-  NewTeam,
-  ManageTeam,
-} from '../components';
+import { TeamSideBar, HomeHeader, Projects, NewTeam } from '../components';
 import { Redirect } from 'react-router-dom';
 const Home = (props) => {
   const [teams, setTeams] = useState([]);
@@ -35,7 +29,7 @@ const Home = (props) => {
     activeTeam != {} && getTeamData();
   }, [activeTeam, shouldFetchProjects]);
   return (
-    <Box display="flex" borderRadius="20px" height={'80%'} width={'100%'}>
+    <Box backgroundColor="white" display="flex" height={'100%'} width={'100%'}>
       {props.user[0]?.user === null && <Redirect to="/" />}
       <NewTeam
         shouldFetchTeams={shouldFetchTeams}
@@ -47,8 +41,8 @@ const Home = (props) => {
       />
 
       <Box
-        minW="225px"
-        w={{ xs: '40%', sm: '40%', md: '40%', lg: '20%' }}
+        minW="190px"
+        w={{ xs: '40%', sm: '40%', md: '40%', lg: '25%' }}
         h="100%"
         mr="5%"
       >

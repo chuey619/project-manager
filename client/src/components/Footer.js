@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Box, Icon, Stack, Text } from '@chakra-ui/core';
+import { Box, Divider, Stack, Text } from '@chakra-ui/core';
 
 function Footer() {
   return (
-    <Box backgroundColor="white" color="gray.400" gridArea="footer" zIndex={2}>
+    <Box backgroundColor="white" gridArea="footer" zIndex={2}>
+      <Divider m="0" borderColor="blue.300" />
       <Stack
         color="blue.300"
         spacing={[8, 12]}

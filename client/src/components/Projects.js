@@ -13,7 +13,7 @@ import { NewProject, CustomLink as Link } from './index';
 const Projects = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box>
+    <Box overflowX="auto" minW="100px">
       <Accordion>
         {props.team !== {} ? (
           props.projects?.length > 0 ? (

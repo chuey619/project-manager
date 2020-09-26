@@ -85,8 +85,10 @@ const ManageTeam = (props) => {
       <Box display="flex" flexDirection="row" justifyContent="space-between">
         <Text
           onClick={() => props.setActiveTeam(props.team)}
-          fontWeight="bold"
+          pl={{ xs: '0', sm: '0', md: '5%', lg: '5%', xl: '5%' }}
           fontSize="1.5rem"
+          color="white"
+          cursor="pointer"
         >
           {props.team.name}
         </Text>

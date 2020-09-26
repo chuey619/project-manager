@@ -5,7 +5,7 @@ import {
   Flex,
   Text,
   Button,
-  ButtonGroup,
+  Divider,
   Icon,
 } from '@chakra-ui/core';
 
@@ -50,8 +50,7 @@ const Navbar = (props) => {
       color="blue.300"
       gridArea="nav"
       {...props}
-      borderBottom="1px solid #63B3ED"
-      mb="3%"
+      borderBottom=".5px solid #63B3ED"
     >
       <Link to="/">
         <Flex align="center" mr={5}>

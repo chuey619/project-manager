@@ -9,6 +9,11 @@ breakpoints.xl = breakpoints[3];
 // Let's say you want to add custom colors
 const customTheme = {
   ...theme,
+  fonts: {
+    body: 'Kanit, sans-serif',
+    heading: 'Kanit, sans-serif',
+    mono: 'Kanit, sans-serif',
+  },
   colors: {
     ...theme.colors,
     brand: {

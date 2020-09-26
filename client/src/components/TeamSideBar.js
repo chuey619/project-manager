@@ -12,6 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
+  Heading,
 } from '@chakra-ui/core';
 
 const TeamSideBar = (props) => {
@@ -32,19 +33,22 @@ const TeamSideBar = (props) => {
     props.setShouldFetchTeams(!props.shouldFetchTeams);
   };
   return (
-    <Box
-      h="100%"
-      border="1px solid lightgrey"
-      boxShadow=" 0px 0px 17px -1px rgba(173,173,173,1)"
-      borderRadius="20px"
-    >
+    <Box h="100%" bg="#515052">
       <Stack
         position="relative"
         textAlign="left"
-        lineHeight="2.5rem"
+        lineHeight="3rem"
         padding={2}
         h="100%"
       >
+        <Heading
+          textDecoration="underline"
+          fontWeight="300"
+          size="lg"
+          color="white"
+        >
+          My Teams:
+        </Heading>
         {!props.teams && <Text>No teams found... Join or create a team!</Text>}
         {props.teams.leadTeams &&
           props.teams.leadTeams.map((team, i) => (
@@ -64,8 +68,10 @@ const TeamSideBar = (props) => {
                 justifyContent="space-between"
               >
                 <Text
+                  pl={{ xs: '0', sm: '0', md: '5%', lg: '5%', xl: '5%' }}
+                  cursor="pointer"
+                  color="white"
                   onClick={() => props.setActiveTeam(team)}
-                  fontWeight="bold"
                   fontSize="1.5rem"
                 >
                   {team.name}
@@ -116,9 +122,14 @@ const TeamSideBar = (props) => {
           ))}
         <Button
           onClick={props.onOpen}
-          variant="outline"
-          variantColor="blue.300"
-          color="#63B3ED"
+          w="50%"
+          minW={'128px'}
+          m="3% auto"
+          rightIcon={'small-add'}
+          color="#515052"
+          backgroundColor="white"
+          border="1px solid white"
+          _hover={{ backgroundColor: 'blue.300', color: 'white' }}
         >
           Create a team
         </Button>

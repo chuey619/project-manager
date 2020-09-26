@@ -61,8 +61,8 @@ const Login = () => {
         align="center"
         justifyContent="space-evenly"
         bg="white"
-        w="30%"
-        minW="380px"
+        w="40%"
+        minW="310px"
         h="auto"
         p={6}
         direction="column"
@@ -75,7 +75,7 @@ const Login = () => {
         <Box position="top" textAlign="center">
           <Heading color="blue.300">Login</Heading>
         </Box>
-        <Box my={4} textAlign="left" w="30%" minW="360px">
+        <Box my={4} textAlign="left" w="30%" minW="300px">
           <form onSubmit={handleSubmit}>
             <FormControl>
               <FormLabel color={'#726E75'}>Username</FormLabel>
