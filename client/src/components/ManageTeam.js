@@ -188,7 +188,6 @@ const ManageTeam = (props) => {
       body: JSON.stringify({ member: memberToAdd }),
     });
     const json = await res.json();
-    console.log(json);
 
     if (json.message === 'member added') {
       onClose();
