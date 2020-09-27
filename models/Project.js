@@ -35,7 +35,7 @@ class Project {
   setTasks = async () => {
     try {
       const tasks = await db.manyOrNone(
-        `SELECT * FROM tasks WHERE project_id = $1`,
+        `SELECT * FROM tasks WHERE project_id = $1 ORDER BY category DESC`,
         this.id
       );
       tasks.forEach((task) => {

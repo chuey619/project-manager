@@ -33,7 +33,7 @@ const TeamSideBar = (props) => {
     );
   };
   return (
-    <Box h="100%" bg="#515052">
+    <Box h="100%" bg="#1E212B">
       <Stack
         position="relative"
         textAlign="left"
@@ -45,9 +45,9 @@ const TeamSideBar = (props) => {
           textDecoration="underline"
           fontWeight="300"
           size="lg"
-          color="white"
+          color="#A5A299"
         >
-          My Teams:
+          My Teams
         </Heading>
         {!props.teams && <Text>No teams found... Join or create a team!</Text>}
         {props.teams.leadTeams &&
@@ -63,32 +63,30 @@ const TeamSideBar = (props) => {
           ))}
         {props.teams.teams &&
           props.teams.teams.map((team, i) => (
-            <>
-              <Box
-                key={i}
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between"
+            <Box
+              key={i}
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
+            >
+              <Text
+                pl={{ xs: '0', sm: '0', md: '5%', lg: '5%', xl: '5%' }}
+                cursor="pointer"
+                color={'white'}
+                onClick={() => props.setActiveTeam(team)}
+                fontSize="1.5rem"
               >
-                <Text
-                  pl={{ xs: '0', sm: '0', md: '5%', lg: '5%', xl: '5%' }}
-                  cursor="pointer"
-                  color="white"
-                  onClick={() => props.setActiveTeam(team)}
-                  fontSize="1.5rem"
-                >
-                  {team.name}
-                </Text>
-                <IconButton
-                  onClick={() => {
-                    setIsOpen(true);
-                    setClickedTeam(team);
-                  }}
-                  size="xs"
-                  icon="small-close"
-                />
-              </Box>
-            </>
+                {team.name}
+              </Text>
+              <IconButton
+                onClick={() => {
+                  setIsOpen(true);
+                  setClickedTeam(team);
+                }}
+                size="xs"
+                icon="small-close"
+              />
+            </Box>
           ))}
         <Button
           onClick={props.onOpen}

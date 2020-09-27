@@ -7,6 +7,7 @@ class Task {
     this.category = task.category;
     this.description = task.description;
     this.completed_by = task.completed_by;
+    this.created_at = task.created_at;
   }
   static findById = async (id) => {
     try {

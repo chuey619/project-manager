@@ -6,6 +6,7 @@ class Message {
     this.sender_id = message.sender_id;
     this.project_id = message.project_id;
     this.sender = message.sender;
+    this.sent_on = message.sent_on;
   }
   static getAllForProject = async (project_id) => {
     try {

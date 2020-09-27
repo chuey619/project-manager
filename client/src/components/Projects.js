@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionHeader,
   AccordionPanel,
+  Heading,
   Text,
   Button,
   useDisclosure,
@@ -65,7 +66,11 @@ const Projects = (props) => {
   };
   const renderProjects = () => {
     return (
-      <Accordion>
+      <Accordion mb="2%" h="100%" lineHeight="2rem" mr="10%">
+        <Heading>{props.team.name}</Heading>
+        <Text fontSize="lg">Members:</Text>
+        <Text>{props.members?.map((member) => member.name + ', ')}</Text>
+        <Text fontSize="lg">Projects:</Text>
         {props.projects?.length > 0 ? (
           props.projects.map((project, i) => (
             <AccordionItem
@@ -108,10 +113,6 @@ const Projects = (props) => {
                     </Link>
 
                     <Link
-                      // _hover={{
-                      //   cursor: 'pointer',
-                      //   textDecortaion: 'underline',
-                      // }}
                       onClick={() => {
                         setProject(project);
                         setIsOpenAlert(true);

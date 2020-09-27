@@ -34,9 +34,8 @@ const Alert = (props) => {
             onClick={() => {
               props.onCloseAlert();
               props.deleteFunction(props.itemToDelete);
-              {
-                props.onClose && props.onClose();
-              }
+
+              props.onClose && props.onClose();
             }}
             ml={3}
           >

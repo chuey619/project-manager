@@ -56,9 +56,10 @@ const Home = (props) => {
           members={members}
         />
       </Box>
-      <Box w="80%" h="80%">
+      <Box overflow="auto" w="80%" h="100%">
         <HomeHeader name={props.user[0]?.user?.username} />
         <Projects
+          members={members}
           user={props.user[0]}
           team={activeTeam}
           projects={projects}

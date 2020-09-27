@@ -96,7 +96,6 @@ const Navbar = (props) => {
             border="1px"
             variant="outline"
             variantColor="blue.300"
-            color="#63B3ED"
             onClick={handleLogout}
           >
             Logout

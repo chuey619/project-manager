@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Textarea } from '@chakra-ui/core';
+import { Input, Box, IconButton, Stack } from '@chakra-ui/core';
 
 const Chat = (props) => {
   useEffect(() => {
@@ -13,24 +13,45 @@ const Chat = (props) => {
     getMessages();
   }, []);
   return (
-    <div className="card">
-      <form onSubmit={props.sendMessage}>
-        <h1>Messenger</h1>
-        <div>
-          <Textarea
-            name="message"
-            onChange={(e) => props.onTextChange(e)}
-            value={props.message}
-            label="Message"
-          />
-        </div>
-        <button>Send</button>
-      </form>
-      <div className="render-chat">
-        <h1>Chat Log</h1>
+    <Box d="flex" w="100%" flexDirection="column" h="100%" bg="#1E212B">
+      <Stack
+        border="1px solid white"
+        borderRadius="25px"
+        backgroundColor="white"
+        w="95%"
+        m="1% auto"
+        maxH="100%"
+        p={4}
+      >
         {props.renderChat()}
-      </div>
-    </div>
+        <form onSubmit={props.sendMessage}>
+          <Box
+            borderRadius="10px"
+            border="1px solid #1E212B"
+            d="flex"
+            justifyContent="space-between"
+            backgroundColor="white"
+            p={1}
+          >
+            <Input
+              size="sm"
+              style={{}}
+              name="message"
+              onChange={(e) => props.onTextChange(e)}
+              value={props.message}
+              label="Message"
+              w="80%"
+              h="100%"
+              border="0"
+              _active={{ border: '0' }}
+              _focus={{ border: '0' }}
+              placeholder="Say something!"
+            />
+            <IconButton size="xs" type="submit" icon="arrow-forward" />
+          </Box>
+        </form>
+      </Stack>
+    </Box>
   );
 };
 

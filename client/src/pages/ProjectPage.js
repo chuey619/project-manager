@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ProjectBoard, Chat } from '../components';
-import { Box, Spinner, Heading, Text } from '@chakra-ui/core';
+import { Box, Spinner, Text } from '@chakra-ui/core';
+
 import io from 'socket.io-client';
 const ProjectPage = (props) => {
   const [shouldFetch, setShouldFetch] = useState(false);
@@ -9,6 +10,7 @@ const ProjectPage = (props) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const socketRef = useRef();
+
   useEffect(() => {
     socketRef.current = io.connect('/');
     socketRef.current.emit('join_room', props.location.state.name);
@@ -85,14 +87,52 @@ const ProjectPage = (props) => {
       room: props.location.state.name,
     });
   };
+  const userIsSender = (message) => {
+    return message.sender === props.user[0]?.user?.name;
+  };
   const renderChat = () => {
-    return messages.map((message, index) => (
-      <div key={index}>
-        <h3>
-          {message.sender}: {message.body}
-        </h3>
-      </div>
-    ));
+    return (
+      <Box
+        // style={{ overflowAnchor: 'none' }}
+        overflowX="auto"
+        d="flex"
+        flexDirection="column"
+      >
+        {messages.map((message, index) => (
+          <Box
+            w="60%"
+            maxW="60%"
+            ml={userIsSender(message) ? '40%' : '0'}
+            key={index}
+          >
+            {console.log(message, props.user.name)}
+            <Box
+              display="flex"
+              flexDirection="column"
+              mr="3%"
+              w="auto"
+              textAlign={userIsSender(message) ? 'end' : 'start'}
+            >
+              <Text mb="2%">{!userIsSender(message) && message.sender}</Text>
+              <Text
+                w="auto"
+                d="inline-block"
+                p={'2% 10%'}
+                borderRadius="10px"
+                backgroundColor={
+                  userIsSender(message) ? 'lightgrey' : '#63b3ed'
+                }
+              >
+                {message.body}
+              </Text>
+              <Text as="i" fontSize="xs">
+                {message.sent_on && message.sent_on.split('T')[0]}
+              </Text>
+            </Box>
+          </Box>
+        ))}
+      </Box>
+    );
   };
 
   const onCardAdd = async (card, lane) => {
@@ -134,21 +174,12 @@ const ProjectPage = (props) => {
   };
 
   return (
-    <Box
-      display="flex"
-      flexDirection={{ xs: 'column', sm: 'column', md: 'column', lg: 'row' }}
-      borderRadius="20px"
-      height={{ base: '100%', lg: '80%', xl: '80%' }}
-      width={'100%'}
-    >
+    <Box backgroundColor="white" display="flex" height={'100%'} width={'100%'}>
       <Box
-        minW="225px"
-        w={{ xs: '60%', sm: '40%', md: '40%', lg: '20%' }}
+        minW="190px"
+        w={{ xs: '40%', sm: '40%', md: '40%', lg: '25%' }}
         h="100%"
-        mr="5%"
-        mb={{ xs: '5%', sm: '5%', md: '5%', lg: '0' }}
       >
-        <Text mb="3%">Chat</Text>
         <Chat
           renderChat={renderChat}
           sendMessage={sendMessage}
@@ -161,8 +192,7 @@ const ProjectPage = (props) => {
           message={message}
         />
       </Box>
-      <Box w={{ base: '100%', lg: '80%', xl: '80%' }} h="80%" mr="5%">
-        <Heading mb="3%">{props.location.state.name}</Heading>
+      <Box w="100%" h="100%">
         {dataLoaded ? (
           <ProjectBoard
             onLaneDelete={onLaneDelete}
