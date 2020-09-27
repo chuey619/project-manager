@@ -8,22 +8,18 @@ Sign up and create or have someone include you in their team. Give your team lea
 
 ## Resources
 
-React trello board: https://github.com/rcdexta/react-trello
+React trello board: https://github.com/rcdextareact-trello
 socket.io: https://socket.io/
 Chakra Ui: https://chakra-ui.com/
 
 ## User Stories
 
--I want to be able to log in or sign up
--When I log in or sign up I want to be taken the my dashboard
--When I am on my dashboard, I want to be able to see the teams I am on, when I click a team I want to see info about that team
--When I click a project I want to be taken the that projects page
+-I want to be able to log in or sign up  
+-When I log in or sign up I want to be taken the my dashboard  
+-When I am on my dashboard, I want to be able to see the teams I am on, when I click a team I want to see info about that team  
+-When I click a project I want to be taken the that projects page  
 -On a given projects page, I want to be able to communicate with my team and change the status of the tasks for a project
 
-## Database Diagram
+## [Imgur](https://i.imgur.com/JXL7WQf.png)
 
-[Imgur](https://i.imgur.com/JXL7WQf.png)
-
-## WireFrames
-
-[Imgur](https://i.imgur.com/HzXMv6j.png)
+## [Imgur](https://i.imgur.com/HzXMv6j.png)
