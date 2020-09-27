@@ -26,7 +26,7 @@ const Home = (props) => {
       setProjects(json.data?.projects);
       setMembers(json.data?.members);
     };
-    activeTeam != {} && getTeamData();
+    activeTeam !== {} && getTeamData();
   }, [activeTeam, shouldFetchProjects]);
   return (
     <Box backgroundColor="white" display="flex" height={'100%'} width={'100%'}>

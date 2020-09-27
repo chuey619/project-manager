@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, Textarea } from '@chakra-ui/core';
+import { Textarea } from '@chakra-ui/core';
 
 const Chat = (props) => {
   useEffect(() => {

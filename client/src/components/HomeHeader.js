@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Heading } from '@chakra-ui/core';
+import { Box, Heading } from '@chakra-ui/core';
 
 const HomeHeader = (props) => {
   return (

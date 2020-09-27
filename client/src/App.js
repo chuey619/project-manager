@@ -52,6 +52,15 @@ function App() {
                   )}
                 />
                 <Route
+                  exact
+                  path="/about"
+                  render={(props) => (
+                    <FullWidth>
+                      <ProjectPage {...props} user={value} />
+                    </FullWidth>
+                  )}
+                />
+                <Route
                   path="/:team_name/:project_name"
                   render={(props) => (
                     <FullWidth>

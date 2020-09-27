@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Heading,
-  Flex,
-  Text,
-  Button,
-  Divider,
-  Icon,
-} from '@chakra-ui/core';
+import { Box, Heading, Flex, Text, Button, Icon } from '@chakra-ui/core';
 
 import { CustomLink as Link } from '.';
 import { isEmpty } from '../util';

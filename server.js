@@ -71,7 +71,6 @@ io.on('connection', (socket) => {
     socket.join(room);
   });
   socket.on('card_change', (room) => {
-    console.log('card change');
     io.in(room).emit('card_change', room);
   });
   socket.on('message', ({ room, message }) => {

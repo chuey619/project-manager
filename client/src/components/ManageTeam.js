@@ -175,11 +175,10 @@ const ManageTeam = (props) => {
   const handleSubmit = async (evt, method) => {
     evt.preventDefault();
     let url = '';
-    {
-      method === 'POST'
-        ? (url = `/teams/${props.team.id}/members`)
-        : (url = `/teams/${props.team.id}/members/${memberToRemove}`);
-    }
+
+    method === 'POST'
+      ? (url = `/teams/${props.team.id}/members`)
+      : (url = `/teams/${props.team.id}/members/${memberToRemove}`);
 
     const res = await fetch(url, {
       method: method,
@@ -191,7 +190,7 @@ const ManageTeam = (props) => {
     const json = await res.json();
     console.log(json);
 
-    if (json.message == 'member added') {
+    if (json.message === 'member added') {
       onClose();
       setMemberToRemove('');
       setMemberToAdd('');
@@ -203,7 +202,7 @@ const ManageTeam = (props) => {
         duration: 7000,
         isClosable: true,
       });
-    } else if (json.message == 'member removed') {
+    } else if (json.message === 'member removed') {
       onClose();
       setMemberToRemove('');
       setMemberToAdd('');

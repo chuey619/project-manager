@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Login, Register } from '../components';
-import { Flex, Box, Heading, Text } from '@chakra-ui/core';
+import { Box, Heading, Text } from '@chakra-ui/core';
 const Landing = (props) => {
   return (
     <Box backgroundColor="white" p="3%">
