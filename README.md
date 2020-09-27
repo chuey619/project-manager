@@ -20,6 +20,6 @@ Chakra Ui: https://chakra-ui.com/
 -When I click a project I want to be taken the that projects page  
 -On a given projects page, I want to be able to communicate with my team and change the status of the tasks for a project
 
-## [Imgur](https://i.imgur.com/JXL7WQf.png)
+## [Db Diagram](https://i.imgur.com/JXL7WQf.png)
 
-## [Imgur](https://i.imgur.com/HzXMv6j.png)
+## [Wireframes](https://i.imgur.com/HzXMv6j.png)
