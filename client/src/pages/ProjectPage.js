@@ -92,12 +92,7 @@ const ProjectPage = (props) => {
   };
   const renderChat = () => {
     return (
-      <Box
-        // style={{ overflowAnchor: 'none' }}
-        overflowX="auto"
-        d="flex"
-        flexDirection="column"
-      >
+      <Box overflowX="auto" d="flex" flexDirection="column" minH="200px">
         {messages.map((message, index) => (
           <Box
             w="60%"

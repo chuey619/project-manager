@@ -18,13 +18,14 @@ const Chat = (props) => {
         border="1px solid white"
         borderRadius="25px"
         backgroundColor="white"
+        minH="200px"
         w="95%"
         m="1% auto"
         maxH="100%"
         p={4}
       >
         {props.renderChat()}
-        <form onSubmit={props.sendMessage}>
+        <form justifySelf="flex-end" onSubmit={props.sendMessage}>
           <Box
             borderRadius="10px"
             border="1px solid #1E212B"
