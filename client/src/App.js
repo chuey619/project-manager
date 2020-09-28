@@ -5,7 +5,7 @@ import { UserProvider, UserContext } from './contexts/userContext';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import customTheme from './theme';
 import { FullWidth } from './layouts';
-import { Home, Landing, ProjectPage } from './pages';
+import { Home, Landing, ProjectPage, About } from './pages';
 function App() {
   const reducer = (state, action) => {
     switch (action.type) {
@@ -56,7 +56,7 @@ function App() {
                   path="/about"
                   render={(props) => (
                     <FullWidth>
-                      <ProjectPage {...props} user={value} />
+                      <About />
                     </FullWidth>
                   )}
                 />
