@@ -17,6 +17,7 @@ const TeamSideBar = (props) => {
         'Content-Type': 'application/json',
       },
     });
+    props.setActiveTeam({});
     props.setShouldFetchTeams(!props.shouldFetchTeams);
   };
   const renderAlertDialogue = () => {

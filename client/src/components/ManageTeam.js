@@ -160,6 +160,7 @@ const ManageTeam = (props) => {
         isClosable: true,
       });
       props.setShouldFetchTeams(!props.shouldFetchTeams);
+      props.setActiveTeam({});
     } else {
       toast({
         position: 'top',
