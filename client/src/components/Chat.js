@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Input, Box, IconButton, Stack } from '@chakra-ui/core';
+import { Input, Box, IconButton, Stack, Heading } from '@chakra-ui/core';
 
 const Chat = (props) => {
   useEffect(() => {
@@ -14,6 +14,7 @@ const Chat = (props) => {
   }, []);
   return (
     <Box d="flex" w="100%" flexDirection="column" h="100%" bg="#1E212B">
+      <Heading color="white">{props.projectName}</Heading>
       <Stack
         border="1px solid white"
         borderRadius="25px"

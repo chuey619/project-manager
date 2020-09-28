@@ -185,6 +185,7 @@ const ProjectPage = (props) => {
           room={room}
           socketRef={socketRef}
           message={message}
+          projectName={props.location.state.name}
         />
       </Box>
       <Box w="100%" h="100%">
