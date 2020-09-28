@@ -6,6 +6,8 @@ Project manager lets users join or create a team and manage various projects thr
 
 Sign up and create or have someone include you in their team. Give your team lead your username and they can add you to the team. Once on a team, you can view the different projects your team is working on and keep track of it with a trello board and communicate with your team via real time chat.
 
+## [Heroku Link](https://ci-project-manager.herokuapp.com/)
+
 ## Resources
 
 React trello board: https://github.com/rcdextareact-trello
