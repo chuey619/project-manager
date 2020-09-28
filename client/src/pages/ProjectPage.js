@@ -10,10 +10,11 @@ const ProjectPage = (props) => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const socketRef = useRef();
-
+  const room = props.location.state.name + '' + props.location.state.id;
   useEffect(() => {
     socketRef.current = io.connect('/');
-    socketRef.current.emit('join_room', props.location.state.name);
+
+    socketRef.current.emit('join_room', room);
     socketRef.current.on('message', (message) => {
       receivedMessage(message.message);
     });
@@ -43,14 +44,14 @@ const ProjectPage = (props) => {
   };
 
   const onLaneDelete = async (lane) => {
-    const url = `/teams/${props.location.state.team_id}/projects/${props.location.state.id}/tasks/${lane}`;
+    const url = `/teams/${props.location.state.team_id}/projects/${props.location.state.id}/categories/${lane}`;
     await fetch(url, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    socketRef.current.emit('card_change', props.location.state.name);
+    socketRef.current.emit('card_change', room);
   };
   const onLaneAdd = async (card, lane) => {
     const body = {
@@ -66,7 +67,7 @@ const ProjectPage = (props) => {
       },
       body: JSON.stringify(body),
     });
-    socketRef.current.emit('card_change', props.location.state.name);
+    socketRef.current.emit('card_change', room);
   };
   const onTextChange = (e) => {
     setMessage(e.target.value);
@@ -84,7 +85,7 @@ const ProjectPage = (props) => {
     setMessage('');
     socketRef.current.emit('message', {
       message: { body: message, sender: props.user[0].user.name },
-      room: props.location.state.name,
+      room: room,
     });
   };
   const userIsSender = (message) => {
@@ -143,7 +144,7 @@ const ProjectPage = (props) => {
       },
       body: JSON.stringify(body),
     });
-    socketRef.current.emit('card_change', props.location.state.name);
+    socketRef.current.emit('card_change', room);
   };
   const onCardDelete = async (cardId) => {
     const url = `/teams/${props.location.state.team_id}/projects/${props.location.state.id}/tasks/${cardId}`;
@@ -153,7 +154,7 @@ const ProjectPage = (props) => {
         'Content-Type': 'application/json',
       },
     });
-    socketRef.current.emit('card_change', props.location.state.name);
+    socketRef.current.emit('card_change', room);
   };
   const onCardMoveAcrossLanes = async (fromLane, toLane, cardId) => {
     const url = `/teams/${props.location.state.team_id}/projects/${props.location.state.id}/tasks/${cardId}`;
@@ -164,7 +165,7 @@ const ProjectPage = (props) => {
       },
       body: JSON.stringify({ category: toLane }),
     });
-    socketRef.current.emit('card_change', props.location.state.name);
+    socketRef.current.emit('card_change', room);
   };
 
   return (
@@ -181,7 +182,7 @@ const ProjectPage = (props) => {
           onTextChange={onTextChange}
           team_id={props.location.state.team_id}
           project_id={props.location.state.id}
-          room={props.location.state.name.replace(' ', '-')}
+          room={room}
           socketRef={socketRef}
           message={message}
         />

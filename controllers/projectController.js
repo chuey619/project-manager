@@ -130,6 +130,7 @@ projectController.updateTask = async (req, res, next) => {
 projectController.deleteCategory = async (req, res, next) => {
   try {
     const category = req.params.category.toString().replace('%', ' ');
+
     const project_id = parseInt(req.params.project_id);
     await Task.deleteByCategory(project_id, category);
     res.json({

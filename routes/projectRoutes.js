@@ -10,7 +10,7 @@ projectRouter.delete(
   projectController.removeTask
 );
 projectRouter.delete(
-  '/:project_id/tasks/:category',
+  '/:project_id/categories/:category',
   projectController.deleteCategory
 );
 projectRouter.put('/:project_id/tasks/:task_id', projectController.updateTask);
