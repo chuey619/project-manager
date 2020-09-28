@@ -224,6 +224,7 @@ const ManageTeam = (props) => {
         isClosable: true,
       });
     }
+    props.setShouldFetchProjects(!props.shouldFetchProjects);
   };
 
   const handleChange = (e, form) => {

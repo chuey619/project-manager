@@ -69,7 +69,7 @@ const Projects = (props) => {
       <Accordion mb="2%" h="100%" lineHeight="2rem" mr="10%">
         <Heading>{props.team.name}</Heading>
         <Text fontSize="lg">Members:</Text>
-        <Text>{props.members?.map((member) => member.name + ', ')}</Text>
+        <Text>{props.members?.map((member) => member.username + ', ')}</Text>
         <Text fontSize="lg">Projects:</Text>
         {props.projects?.length > 0 ? (
           props.projects.map((project, i) => (

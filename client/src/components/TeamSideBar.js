@@ -60,6 +60,8 @@ const TeamSideBar = (props) => {
               setActiveTeam={props.setActiveTeam}
               setShouldFetchTeams={props.setShouldFetchTeams}
               shouldFetchTeams={props.shouldFetchTeams}
+              shouldFetchProjects={props.shouldFetchProjects}
+              setShouldFetchProjects={props.setShouldFetchProjects}
             />
           ))}
         {props.teams.teams &&
