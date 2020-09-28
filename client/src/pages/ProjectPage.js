@@ -100,7 +100,6 @@ const ProjectPage = (props) => {
             ml={userIsSender(message) ? '40%' : '0'}
             key={index}
           >
-            {console.log(message, props.user.name)}
             <Box
               display="flex"
               flexDirection="column"
